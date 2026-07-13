@@ -20,6 +20,15 @@ Idealizador e desenvolvedor principal do projeto NextPoint.
 - Suporte durante a criação e evolução do NextPoint.
 
 ---
+  
+## 👥 Equipe
+
+- Victor Vicente — Criador e Desenvolvedor
+- Ismael Guedes — Desenvolvimento
+- Pedro de Araújo — Design
+- Mateus Martins — Pesquisa
+  
+---
 
 ## 🙏 Agradecimentos
 
