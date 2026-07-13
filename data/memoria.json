@@ -1,1 +1,12 @@
-{}
+import json
+
+ARQUIVO_MEMORIA = "data/memoria.json"
+
+
+def lembrar_nome():
+    nome = input("Qual é o seu nome? ")
+
+    with open(ARQUIVO_MEMORIA, "w") as arquivo:
+        json.dump({"nome": nome}, arquivo)
+
+    return nome
