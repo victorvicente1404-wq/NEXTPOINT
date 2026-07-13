@@ -1,2 +1,4 @@
+from iara.conversa import falar
+
 print("Iniciando NextPoint...")
-print("Iara online!")
+falar()
