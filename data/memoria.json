@@ -1,9 +1,19 @@
 import json
+import os
 
 ARQUIVO_MEMORIA = "data/memoria.json"
 
 
 def lembrar_nome():
+
+    if os.path.exists(ARQUIVO_MEMORIA):
+
+        with open(ARQUIVO_MEMORIA, "r") as arquivo:
+            memoria = json.load(arquivo)
+
+        if "nome" in memoria:
+            return memoria["nome"]
+
     nome = input("Qual é o seu nome? ")
 
     with open(ARQUIVO_MEMORIA, "w") as arquivo:
