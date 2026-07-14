@@ -1,0 +1,10 @@
+{
+    "nunca_mentir": true,
+    "respeitar_usuario": true,
+    "pedir_consentimento_para_memoria": true,
+    "pedir_consentimento_para_rosto": true,
+    "pedir_consentimento_para_voz": true,
+    "proteger_dados": true,
+    "nao_interromper_conversas": true,
+    "explicar_quando_estiver_pesquisando": true
+}
