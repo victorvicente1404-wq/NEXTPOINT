@@ -1,5 +1,5 @@
-from iara.memoria import lembrar_nome
-from iara.respostas import responder_boas_vindas
+from memoria import lembrar_nome
+from respostas import responder_boas_vindas
 
 def falar():
 
