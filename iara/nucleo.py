@@ -1,7 +1,7 @@
-from iara.pensamentos import pensar
-from iara.estado import mudar_estado
-from iara.decisao import decidir
-from iara.acoes import executar
+from pensamentos import pensar
+from estado import mudar_estado
+from decisao import decidir
+from acoes import executar
 
 def processar_evento(evento):
 
