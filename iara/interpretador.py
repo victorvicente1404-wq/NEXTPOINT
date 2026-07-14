@@ -1,19 +1,22 @@
 """
 Interpretador da Iara.
 
-Responsável por analisar a mensagem do usuário
-e retornar uma estrutura padronizada.
+Responsável por descobrir a intenção da mensagem.
 """
+
+from .nlp import limpar_texto
 
 
 def interpretar(mensagem: str) -> dict:
 
-    texto = mensagem.lower().strip()
+    texto = limpar_texto(mensagem)
 
     cumprimentos = {
         "oi",
-        "olá",
         "ola",
+        "eae",
+        "fala",
+        "opa",
         "bom dia",
         "boa tarde",
         "boa noite"
@@ -21,15 +24,16 @@ def interpretar(mensagem: str) -> dict:
 
     despedidas = {
         "tchau",
-        "até mais",
+        "falou",
         "ate mais",
-        "falou"
+        "ate logo"
     }
 
     if texto in cumprimentos:
 
         return {
             "mensagem": mensagem,
+            "texto": texto,
             "intencao": "cumprimento",
             "confianca": 1.0,
             "entidades": []
@@ -39,6 +43,7 @@ def interpretar(mensagem: str) -> dict:
 
         return {
             "mensagem": mensagem,
+            "texto": texto,
             "intencao": "despedida",
             "confianca": 1.0,
             "entidades": []
@@ -46,7 +51,8 @@ def interpretar(mensagem: str) -> dict:
 
     return {
         "mensagem": mensagem,
+        "texto": texto,
         "intencao": "desconhecido",
-        "confianca": 0.0,
+        "confianca": 0.2,
         "entidades": []
     }
