@@ -1,20 +1,15 @@
 from iara.estado import mudar_estado
+from iara.decisao import decidir
+from iara.acoes import executar
 
 def pensar(evento):
 
-    print(f"🧠 Pensando sobre: {evento}")
+    print(f"🧠 Evento: {evento}")
 
-    if evento == "sistema_iniciado":
-        mudar_estado("observando")
-        print("Tudo funcionando normalmente.")
+    acao = decidir(evento)
 
-    elif evento == "pessoa_detectada":
-        mudar_estado("analisando")
-        print("Uma pessoa foi detectada.")
+    print(f"🎯 Decisão: {acao}")
 
-    elif evento == "usuario_conhecido":
-        mudar_estado("cumprimentando")
-        print("Vou cumprimentar essa pessoa.")
+    executar(acao)
 
-    else:
-        print("Ainda não sei como lidar com isso.")
+    mudar_estado(acao)
