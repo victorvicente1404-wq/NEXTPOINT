@@ -1,17 +1,80 @@
-import json
+import re
 
-ARQUIVO = "data/conhecimento.json"
+from memoria import guardar_informacao
 
-def aprender(categoria, informacao):
 
-    with open(ARQUIVO, "r", encoding="utf-8") as arquivo:
-        dados = json.load(arquivo)
+def analisar_aprendizado(texto):
 
-    if categoria not in dados:
-        dados[categoria] = []
+    texto = texto.lower()
 
-    if informacao not in dados[categoria]:
-        dados[categoria].append(informacao)
 
-    with open(ARQUIVO, "w", encoding="utf-8") as arquivo:
-        json.dump(dados, arquivo, indent=4, ensure_ascii=False)
+    # Eu gosto de X
+
+    padrao_gosto = r"eu gosto de (.+)"
+
+    resultado = re.search(
+        padrao_gosto,
+        texto
+    )
+
+
+    if resultado:
+
+        valor = resultado.group(1)
+
+        guardar_informacao(
+            "preferencias",
+            "gostos",
+            valor
+        )
+
+        return "gosto"
+
+
+    # Minha cor favorita é X
+
+    padrao_cor = r"minha cor favorita é (.+)"
+
+    resultado = re.search(
+        padrao_cor,
+        texto
+    )
+
+
+    if resultado:
+
+        valor = resultado.group(1)
+
+        guardar_informacao(
+            "preferencias",
+            "cor",
+            valor
+        )
+
+        return "cor"
+
+
+    # Eu estudo X
+
+    padrao_estudo = r"eu estudo (.+)"
+
+    resultado = re.search(
+        padrao_estudo,
+        texto
+    )
+
+
+    if resultado:
+
+        valor = resultado.group(1)
+
+        guardar_informacao(
+            "usuario",
+            "estudo",
+            valor
+        )
+
+        return "estudo"
+
+
+    return None
