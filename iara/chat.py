@@ -1,6 +1,6 @@
-from iara.motor_conversa import responder
-from iara.historico import salvar
-from iara.estado import mudar_estado
+from motor_conversa import responder
+from historico import salvar
+from estado import mudar_estado
 
 def conversar():
 
