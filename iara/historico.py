@@ -1,17 +1,24 @@
 import json
+import os
 
 ARQUIVO = "data/historico.json"
 
+def carregar():
 
-def salvar(pergunta, resposta):
+    if not os.path.exists(ARQUIVO):
+        return []
 
     with open(ARQUIVO, "r", encoding="utf-8") as arquivo:
-        dados = json.load(arquivo)
+        return json.load(arquivo)
 
-    dados["conversas"].append({
-        "usuario": pergunta,
+def salvar(usuario, resposta):
+
+    historico = carregar()
+
+    historico.append({
+        "usuario": usuario,
         "iara": resposta
     })
 
     with open(ARQUIVO, "w", encoding="utf-8") as arquivo:
-        json.dump(dados, arquivo, indent=4, ensure_ascii=False)
+        json.dump(historico, arquivo, indent=4, ensure_ascii=False)
