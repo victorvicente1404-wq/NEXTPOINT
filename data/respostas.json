@@ -1,1 +1,17 @@
+{
+    "cumprimento": [
+        "Olá!",
+        "Oi!",
+        "Como posso ajudar?"
+    ],
 
+    "despedida": [
+        "Até mais!",
+        "Até logo!"
+    ],
+
+    "desconhecido": [
+        "Ainda não sei responder isso.",
+        "Pode explicar de outra forma?"
+    ]
+}
