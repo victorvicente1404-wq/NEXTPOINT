@@ -1,4 +1,11 @@
-def identificar_intencao(mensagem):
+"""
+Interpretador da Iara.
+
+Responsável por descobrir a intenção do usuário.
+"""
+
+
+def interpretar(mensagem):
 
     texto = mensagem.lower().strip()
 
@@ -19,9 +26,23 @@ def identificar_intencao(mensagem):
     }
 
     if texto in cumprimentos:
-        return "cumprimento"
+
+        return {
+            "intencao": "cumprimento",
+            "confianca": 1.0,
+            "entidades": []
+        }
 
     if texto in despedidas:
-        return "despedida"
 
-    return "desconhecido"
+        return {
+            "intencao": "despedida",
+            "confianca": 1.0,
+            "entidades": []
+        }
+
+    return {
+        "intencao": "desconhecido",
+        "confianca": 0.5,
+        "entidades": []
+    }
