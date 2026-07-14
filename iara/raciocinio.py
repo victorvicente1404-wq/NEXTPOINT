@@ -1,12 +1,16 @@
 """
-Sistema de raciocínio.
+Sistema de raciocínio da Iara.
 
-Recebe os dados interpretados e decide
-qual ação será realizada.
+Responsável por decidir a próxima ação
+com base na interpretação, contexto e memória.
 """
 
 
-def decidir(dados: dict) -> dict:
+def decidir(
+    dados: dict,
+    contexto: dict,
+    memoria: dict
+) -> dict:
 
     intencao = dados["intencao"]
 
