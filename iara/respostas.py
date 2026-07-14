@@ -1,4 +1,4 @@
-from iara.humor import obter_humor
+from humor import obter_humor
 
 def responder_boas_vindas(nome):
 
