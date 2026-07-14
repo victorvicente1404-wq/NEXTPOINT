@@ -1,15 +1,20 @@
 import time
+
 from iara.eventos import proximo_evento
+from iara.nucleo import pensar
 
 def observar():
+
     while True:
 
         evento = proximo_evento()
 
         if evento:
-            print(f"📩 Evento recebido: {evento}")
+
+            pensar(evento)
 
         else:
-            print("👀 Observando o ambiente...")
+
+            print("👀 Observando...")
 
         time.sleep(2)
