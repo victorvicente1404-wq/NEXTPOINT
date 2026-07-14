@@ -1,14 +1,14 @@
 """
-Sistema de raciocínio da Iara.
+Sistema de raciocínio.
 
-Responsável por decidir qual ação tomar
-após interpretar a mensagem do usuário.
+Recebe os dados interpretados e decide
+qual ação será realizada.
 """
 
 
-def decidir(dados_interpretados, contexto, memoria):
+def decidir(dados: dict) -> dict:
 
-    intencao = dados_interpretados["intencao"]
+    intencao = dados["intencao"]
 
     if intencao == "cumprimento":
 
