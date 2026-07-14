@@ -124,6 +124,41 @@ def conversar(mensagem):
 
     intencao = identificar_intencao(mensagem)
 
+    if intencao == "salvar_nome":
+
+    nome = mensagem.lower().replace(
+        "meu nome é",
+        ""
+    ).strip()
+
+
+    guardar_informacao(
+        "usuario",
+        "nome",
+        nome
+    )
+
+
+    resposta = "Prazer em conhecer você, " + nome + "!"
+
+
+elif intencao == "lembrar_nome":
+
+    nome = buscar_informacao(
+        "usuario",
+        "nome"
+    )
+
+
+    if nome:
+        resposta = "Seu nome é " + nome + "."
+
+    else:
+        resposta = "Ainda não sei seu nome."
+
+
+else:
+
     resposta = gerar_resposta(intencao)
 
 
