@@ -1,3 +1,7 @@
+from memoria import (
+    guardar_informacao,
+    buscar_informacao
+)
 import json
 import random
 import os
@@ -54,7 +58,12 @@ def gerar_resposta(intencao):
 # INTERPRETAÇÃO BÁSICA
 # =========================
 
-def identificar_intencao(texto):
+def identificar_intencao(if "meu nome é" in texto:
+    return "salvar_nome"
+
+
+if "qual meu nome" in texto:
+    return "lembrar_nome"):
 
     texto = texto.lower()
 
