@@ -1,7 +1,7 @@
-from iara.estado import mudar_estado
-from iara.conversa import falar
-from iara.ciclo import observar
-from iara.eventos import adicionar_evento
+from estado import mudar_estado
+from conversa import falar
+from ciclo import observar
+from eventos import adicionar_evento
 
 def iniciar():
 
