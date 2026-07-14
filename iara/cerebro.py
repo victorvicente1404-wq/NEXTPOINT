@@ -7,3 +7,5 @@ def iniciar():
     falar()
 
     mudar_estado("observando")
+
+    print("👀 Iara está observando o ambiente...")
