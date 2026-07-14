@@ -1,7 +1,7 @@
 import time
 
-from iara.eventos import proximo_evento
-from iara.nucleo import pensar
+from eventos import proximo_evento
+from nucleo import pensar
 
 def observar():
 
