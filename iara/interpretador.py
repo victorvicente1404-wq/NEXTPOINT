@@ -1,58 +1,73 @@
 """
 Interpretador da Iara.
 
-Responsável por descobrir a intenção da mensagem.
+Responsável por entender a mensagem.
 """
 
 from .nlp import limpar_texto
+from .extrator import extrair
 
 
-def interpretar(mensagem: str) -> dict:
+def interpretar(mensagem: str):
 
     texto = limpar_texto(mensagem)
 
+    entidades = extrair(texto)
+
     cumprimentos = {
+
         "oi",
+
         "ola",
+
         "eae",
-        "fala",
+
         "opa",
+
+        "fala",
+
         "bom dia",
+
         "boa tarde",
+
         "boa noite"
+
     }
 
     despedidas = {
+
         "tchau",
+
         "falou",
+
         "ate mais",
+
         "ate logo"
+
     }
 
     if texto in cumprimentos:
 
-        return {
-            "mensagem": mensagem,
-            "texto": texto,
-            "intencao": "cumprimento",
-            "confianca": 1.0,
-            "entidades": []
-        }
+        intencao = "cumprimento"
 
-    if texto in despedidas:
+    elif texto in despedidas:
 
-        return {
-            "mensagem": mensagem,
-            "texto": texto,
-            "intencao": "despedida",
-            "confianca": 1.0,
-            "entidades": []
-        }
+        intencao = "despedida"
+
+    else:
+
+        intencao = "desconhecido"
 
     return {
+
         "mensagem": mensagem,
+
         "texto": texto,
-        "intencao": "desconhecido",
-        "confianca": 0.2,
-        "entidades": []
+
+        "intencao": intencao,
+
+        "confianca": 1.0,
+
+        "entidades": entidades
+
     }
