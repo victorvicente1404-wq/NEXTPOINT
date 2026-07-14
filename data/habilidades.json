@@ -1,0 +1,9 @@
+{
+    "conversar": true,
+    "lembrar": true,
+    "pesquisar": false,
+    "ouvir": false,
+    "enxergar": false,
+    "controlar_computador": false,
+    "automatizar": false
+}
