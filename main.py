@@ -1,4 +1,4 @@
-from iara import NOME_PROJETO, VERSAO_PROJETO
+from iara.config import NOME_PROJETO, VERSAO_PROJETO
 from iara.cerebro import iniciar
 from iara.chat import conversar
 
