@@ -1,7 +1,0 @@
-NOME_PROJETO = "NextPoint"
-
-VERSAO_PROJETO = "0.2.0"
-
-MODO_DEBUG = True
-
-DESENVOLVEDOR = "Black"
