@@ -3,9 +3,11 @@ from iara.estado import mudar_estado
 from iara.decisao import decidir
 from iara.acoes import executar
 
-def pensar(evento):
+def processar_evento(evento):
 
     print(f"🧠 Evento: {evento}")
+
+    pensar(evento)
 
     acao = decidir(evento)
 
