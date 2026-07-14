@@ -1,3 +1,4 @@
+from iara.pensamentos import pensar
 from iara.estado import mudar_estado
 from iara.decisao import decidir
 from iara.acoes import executar
