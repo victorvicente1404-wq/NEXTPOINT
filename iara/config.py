@@ -1,0 +1,7 @@
+NOME_PROJETO = "NextPoint"
+
+NOME_IA = "Iara"
+
+VERSAO_PROJETO = "0.1.0"
+
+DESENVOLVEDOR = "Victor"
