@@ -1,3 +1,10 @@
+"""
+Sistema de respostas da Iara.
+
+Responsável por carregar as respostas
+e escolher uma resposta adequada.
+"""
+
 import json
 import random
 from pathlib import Path
@@ -24,8 +31,13 @@ def carregar():
 RESPOSTAS = carregar()
 
 
-def responder(decisao):
+def responder(decisao: dict) -> str:
+
+    tipo = decisao["tipo"]
+
+    if tipo not in RESPOSTAS:
+        tipo = "desconhecido"
 
     return random.choice(
-        RESPOSTAS[intencao]
+        RESPOSTAS[tipo]
     )
