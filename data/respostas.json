@@ -1,14 +1,32 @@
 {
-    "cumprimentos": [
-        "Oi! 😊",
-        "Olá!",
-        "Que bom te ver!",
-        "Oi! Como você está?"
+    "cumprimento": [
+        "Olá! Como posso ajudar?",
+        "Oi! Estou aqui.",
+        "Olá, sou a Iara."
     ],
 
-    "despedidas": [
+    "identidade": [
+        "Eu sou a Iara, assistente do NextPoint.",
+        "Meu nome é Iara. Fui criada para auxiliar você."
+    ],
+
+    "como_esta": [
+        "Estou funcionando normalmente.",
+        "Tudo certo por aqui!"
+    ],
+
+    "agradecimento": [
+        "Por nada!",
+        "Sempre à disposição."
+    ],
+
+    "despedida": [
         "Até mais!",
-        "Tchau! 👋",
         "Foi bom conversar com você."
+    ],
+
+    "desconhecido": [
+        "Ainda não entendi completamente.",
+        "Pode explicar de outra forma?"
     ]
 }
