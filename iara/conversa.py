@@ -1,9 +1,10 @@
 from iara.memoria import lembrar_nome
-from iara.personalidade import NOME
+from iara.respostas import responder_boas_vindas
 
 def falar():
-    print(APRESENTACAO)
+
+    print("Olá! Eu sou a Iara.")
 
     nome = lembrar_nome()
 
-    print(f"Bem-vindo, {nome}!")
+    responder_boas_vindas(nome)
