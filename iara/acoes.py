@@ -1,11 +1,14 @@
 """
 Sistema de ações da Iara.
+
+Responsável por executar ações decididas
+pelo módulo de raciocínio.
 """
 
 
-def executar(decisao):
+def executar(decisao: dict):
 
-    acao = decisao.get("acao")
+    acao = decisao["acao"]
 
     if acao == "responder":
         return None
