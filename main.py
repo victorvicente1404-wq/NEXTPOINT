@@ -1,10 +1,17 @@
-from iara.config import NOME_PROJETO, VERSAO_PROJETO
-from iara.cerebro import iniciar
-from iara.chat import conversar
+from iara.config import (
+    NOME_PROJETO,
+    NOME_IA,
+    VERSAO
+)
 
-print(f"Iniciando {NOME_PROJETO}...")
-print(f"Versão {VERSAO_PROJETO}")
 
-iniciar()
+def main():
 
-conversar()
+    print("=" * 40)
+    print(f"{NOME_PROJETO} - {NOME_IA}")
+    print(f"Versão {VERSAO}")
+    print("=" * 40)
+
+
+if __name__ == "__main__":
+    main()
