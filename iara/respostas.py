@@ -24,7 +24,7 @@ def carregar():
 RESPOSTAS = carregar()
 
 
-def responder(intencao):
+def responder(decisao):
 
     return random.choice(
         RESPOSTAS[intencao]
