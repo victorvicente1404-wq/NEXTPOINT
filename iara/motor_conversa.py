@@ -1,13 +1,18 @@
-from .interpretador import identificar_intencao
-from .respostas import responder
-from .contexto import atualizar
-
-
 def conversar(mensagem):
 
     intencao = identificar_intencao(mensagem)
 
-    resposta = responder(intencao)
+    contexto = obter()
+
+    memoria = carregar()
+
+    decisao = decidir(
+        intencao,
+        contexto,
+        memoria
+    )
+
+    resposta = responder(decisao)
 
     atualizar(
         mensagem,
