@@ -1,94 +1,125 @@
-from iara.contexto import CONTEXTO
+import json
+import random
+import os
 
+
+# =========================
+# CARREGAR RESPOSTAS
+# =========================
+
+def carregar_respostas():
+
+    caminho = os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "dados",
+        "respostas.json"
+    )
+
+    with open(caminho, "r", encoding="utf-8") as arquivo:
+        return json.load(arquivo)
+
+
+RESPOSTAS = carregar_respostas()
+
+
+# =========================
+# CONTEXTO DA CONVERSA
+# =========================
+
+CONTEXTO = {
+    "ultima_pergunta": None,
+    "assunto": None,
+    "ultima_resposta": None
+}
+
+
+# =========================
+# GERADOR DE RESPOSTAS
+# =========================
+
+def gerar_resposta(intencao):
+
+    if intencao in RESPOSTAS:
+        return random.choice(
+            RESPOSTAS[intencao]
+        )
+
+    return random.choice(
+        RESPOSTAS["desconhecido"]
+    )
+
+
+# =========================
+# INTERPRETAÇÃO BÁSICA
+# =========================
 
 def identificar_intencao(texto):
 
-    texto = texto.lower().strip()
+    texto = texto.lower()
 
-    if any(palavra in texto for palavra in ["oi", "olá", "eae", "opa"]):
+
+    if any(palavra in texto for palavra in [
+        "oi",
+        "olá",
+        "ola",
+        "bom dia",
+        "boa tarde",
+        "boa noite"
+    ]):
         return "cumprimento"
 
-    elif "tudo bem" in texto:
-        return "como_esta"
 
-    elif "qual seu nome" in texto or "quem é você" in texto:
+    if any(palavra in texto for palavra in [
+        "quem é você",
+        "quem e voce",
+        "seu nome",
+        "o que é você"
+    ]):
         return "identidade"
 
-    elif "quem criou você" in texto:
-        return "criador"
 
-    elif "obrigado" in texto or "valeu" in texto:
+    if any(palavra in texto for palavra in [
+        "tudo bem",
+        "como está",
+        "como esta"
+    ]):
+        return "como_esta"
+
+
+    if any(palavra in texto for palavra in [
+        "obrigado",
+        "valeu",
+        "agradeço"
+    ]):
         return "agradecimento"
 
-    elif "bom dia" in texto:
-        return "bom_dia"
 
-    elif "boa tarde" in texto:
-        return "boa_tarde"
+    if any(palavra in texto for palavra in [
+        "tchau",
+        "até mais",
+        "ate mais"
+    ]):
+        return "despedida"
 
-    elif "boa noite" in texto:
-        return "boa_noite"
 
     return "desconhecido"
 
 
-def detectar_assunto(texto):
 
-    texto = texto.lower()
+# =========================
+# MOTOR PRINCIPAL
+# =========================
 
-    if "f1" in texto or "fórmula" in texto:
-        return "formula1"
+def conversar(mensagem):
 
-    elif "python" in texto:
-        return "python"
+    intencao = identificar_intencao(mensagem)
 
-    elif "pokemon" in texto:
-        return "pokemon"
-
-    elif "ia" in texto or "inteligência artificial" in texto:
-        return "inteligencia_artificial"
-
-    return None
+    resposta = gerar_resposta(intencao)
 
 
-def responder(frase):
-
-    CONTEXTO["ultima_pergunta"] = frase
-
-    assunto = detectar_assunto(frase)
-
-    if assunto:
-        CONTEXTO["assunto"] = assunto
-
-    intencao = identificar_intencao(frase)
-
-    if intencao == "cumprimento":
-        resposta = "Oi! 😊 Como você está?"
-
-    elif intencao == "como_esta":
-        resposta = "Estou bem! E você?"
-
-    elif intencao == "identidade":
-        resposta = "Meu nome é Iara."
-
-    elif intencao == "criador":
-        resposta = "Fui criada pelo Black através do projeto NextPoint."
-
-    elif intencao == "agradecimento":
-        resposta = "Disponha! 😄"
-
-    elif intencao == "bom_dia":
-        resposta = "Bom dia! Espero que seu dia seja ótimo!"
-
-    elif intencao == "boa_tarde":
-        resposta = "Boa tarde! Como posso ajudar?"
-
-    elif intencao == "boa_noite":
-        resposta = "Boa noite! Como foi seu dia?"
-
-    else:
-        resposta = "Ainda não sei responder isso, mas vou aprender."
-
+    CONTEXTO["ultima_pergunta"] = mensagem
     CONTEXTO["ultima_resposta"] = resposta
+
 
     return resposta
