@@ -1,21 +1,30 @@
-def decidir(intencao, contexto, memoria):
+"""
+Sistema de raciocínio da Iara.
 
-    mapa = {
-        "cumprimento": {
+Responsável por decidir qual ação tomar
+após interpretar a mensagem do usuário.
+"""
+
+
+def decidir(dados_interpretados, contexto, memoria):
+
+    intencao = dados_interpretados["intencao"]
+
+    if intencao == "cumprimento":
+
+        return {
             "acao": "responder",
             "tipo": "cumprimento"
-        },
+        }
 
-        "despedida": {
+    if intencao == "despedida":
+
+        return {
             "acao": "responder",
             "tipo": "despedida"
         }
-    }
 
-    return mapa.get(
-        intencao,
-        {
-            "acao": "responder",
-            "tipo": "desconhecido"
-        }
-    )
+    return {
+        "acao": "responder",
+        "tipo": "desconhecido"
+    }
