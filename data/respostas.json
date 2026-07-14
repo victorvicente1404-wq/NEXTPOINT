@@ -29,4 +29,12 @@
         "Ainda não entendi completamente.",
         "Pode explicar de outra forma?"
     ]
+
+    "salvar_nome": [
+    "Vou guardar seu nome."
+],
+
+"lembrar_nome": [
+    "Vou verificar na minha memória."
+]
 }
