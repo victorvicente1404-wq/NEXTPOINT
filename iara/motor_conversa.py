@@ -2,39 +2,51 @@
 Motor principal da conversa.
 """
 
+from .evento import Evento
 from .interpretador import interpretar
 from .contexto import atualizar, obter
 from .memoria import carregar, aprender
 from .raciocinio import decidir
-from .respostas import responder
 from .acoes import executar
+from .respostas import responder
 
 
-def conversar(mensagem):
+def conversar(mensagem: str):
 
-    dados = interpretar(mensagem)
+    # Cria o evento
+    evento = Evento(mensagem)
 
-    if dados["entidades"]:
-        aprender(dados["entidades"])
+    # Interpreta a mensagem
+    interpretar(evento)
 
-    contexto = obter()
+    # Aprende automaticamente
+    if evento.entidades:
+        aprender(evento.entidades)
 
-    memoria = carregar()
+    # Carrega contexto e memória
+    evento.contexto = obter()
+    evento.memoria = carregar()
 
-    decisao = decidir(
-        dados,
-        contexto,
-        memoria
+    # Decide o que fazer
+    evento.decisao = decidir(
+        evento,
+        evento.contexto,
+        evento.memoria
     )
 
-    executar(decisao)
+    # Executa ações
+    executar(evento.decisao)
 
-    resposta = responder(decisao)
+    # Gera resposta
+    evento.resposta = responder(
+        evento.decisao
+    )
 
+    # Atualiza contexto
     atualizar(
-        mensagem,
-        dados["intencao"],
-        resposta
+        evento.mensagem,
+        evento.intencao,
+        evento.resposta
     )
 
-    return resposta
+    return evento.resposta
