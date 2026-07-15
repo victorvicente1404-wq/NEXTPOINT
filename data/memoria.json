@@ -1,12 +1,25 @@
 {
-    "usuario": {},
-    "preferencias": {},
-    "rotina": {},
-    "historico": [],
-    "conhecimento": {},
-    "apelidos": {},
-    "objetivos": [],
-    "projetos": {},
-    "dispositivos": {},
-    "versao": "1.0"
+  "perfil_usuario": {
+    "nome": "",
+    "apelido": "",
+    "idade": null,
+    "preferencias": [],
+    "evitar": []
+  },
+  "rotina": {
+    "horarios": {},
+    "locais_frequentes": [],
+    "atividades_comuns": []
+  },
+  "observacoes": {
+    "ultima_atividade": "",
+    "estado_emocional": "neutro",
+    "pessoas_presentes": []
+  },
+  "historico_conversas": [],
+  "conhecimento_ambiente": {
+    "dispositivos": [],
+    "cameras": [],
+    "ultima_observacao": null
+  }
 }
