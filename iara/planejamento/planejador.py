@@ -5,36 +5,85 @@ Transforma um objetivo em um plano de execução.
 """
 
 
-def planejar(objetivo):
+def planejar(evento):
 
-    objetivo.plano.clear()
+    objetivo = evento.objetivo
+
+    objetivo.plano = []
+
+    # -------------------------
+    # Consultar nome
+    # -------------------------
 
     if objetivo.tipo == "consultar_nome":
 
-        objetivo.plano.append(
+        objetivo.plano.extend([
 
             {
-                "acao": "consultar_memoria"
-            }
-
-        )
-
-        objetivo.plano.append(
+                "acao": "ler_memoria",
+                "chave": "nome"
+            },
 
             {
-                "acao": "responder"
+                "acao": "responder_nome"
             }
 
-        )
+        ])
 
-        return objetivo
+        return evento
+
+    # -------------------------
+    # Consultar idade
+    # -------------------------
+
+    if objetivo.tipo == "consultar_idade":
+
+        objetivo.plano.extend([
+
+            {
+                "acao": "ler_memoria",
+                "chave": "idade"
+            },
+
+            {
+                "acao": "responder_idade"
+            }
+
+        ])
+
+        return evento
+
+    # -------------------------
+    # Aprender
 
     if objetivo.tipo == "aprender":
 
-        objetivo.plano.append(
+        objetivo.plano.extend([
 
             {
                 "acao": "salvar_memoria"
+            },
+
+            {
+                "acao": "confirmar_aprendizado"
+            }
+
+        ])
+
+        return evento
+
+    # -------------------------
+    # Conversa
+
+    objetivo.plano.append(
+
+        {
+            "acao": "responder_padrao"
+        }
+
+    )
+
+    return evento                "acao": "salvar_memoria"
             }
 
         )
