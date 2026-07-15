@@ -2,30 +2,30 @@
 Sistema de raciocínio da Iara.
 """
 
+from .evento import Evento
+
 
 def decidir(
-    dados: dict,
+    evento: Evento,
     contexto: dict,
     memoria: dict
 ) -> dict:
 
-    intencao = dados["intencao"]
-
-    if intencao == "cumprimento":
+    if evento.intencao == "cumprimento":
 
         return {
             "acao": "responder",
             "tipo": "cumprimento"
         }
 
-    if intencao == "despedida":
+    if evento.intencao == "despedida":
 
         return {
             "acao": "responder",
             "tipo": "despedida"
         }
 
-    if intencao == "consultar_nome":
+    if evento.intencao == "consultar_nome":
 
         nome = memoria["usuario"].get("nome")
 
@@ -33,6 +33,14 @@ def decidir(
             "acao": "consultar_memoria",
             "tipo": "nome",
             "valor": nome
+        }
+
+    if evento.entidades:
+
+        return {
+            "acao": "confirmar_aprendizado",
+            "tipo": evento.entidades[0]["tipo"],
+            "valor": evento.entidades[0]["valor"]
         }
 
     return {
