@@ -1,66 +1,44 @@
 """
-Raciocínio da Iara.
+Raciocínio da Iara - Versão Melhorada
 """
 
-
 def decidir(evento):
-
-    texto = evento.texto.lower()
-
+    """Decide o objetivo principal com base na mensagem do usuário."""
+    
+    texto = evento.texto.lower().strip()
     objetivo = evento.objetivo
 
-    # -----------------------
-    # CONSULTAR NOME
-    # -----------------------
+    # === INTENÇÕES PRIORITÁRIAS ===
 
-    if "meu nome" in texto and "qual" in texto:
+    # Cumprimentos e conversa casual
+    if any(p in texto for p in ["oi", "olá", "eae", "fala", "bom dia", "boa tarde", "boa noite"]):
+        objetivo.tipo = "cumprimento"
+        return evento
 
+    # Despedidas
+    if any(p in texto for p in ["tchau", "até logo", "falou", "adeus"]):
+        objetivo.tipo = "despedida"
+        return evento
+
+    # Consultar informações pessoais
+    if "meu nome" in texto or "quem sou eu" in texto:
         objetivo.tipo = "consultar_nome"
-
         return evento
 
-    # -----------------------
-    # CONSULTAR IDADE
-    # -----------------------
-
-    if "minha idade" in texto:
-
+    if "idade" in texto and ("tenho" in texto or "minha" in texto or "quantos anos" in texto):
         objetivo.tipo = "consultar_idade"
-
         return evento
 
-    # -----------------------
-    # APRENDER
-    # -----------------------
-
+    # Aprendizado (quando o usuário se apresenta ou conta algo)
     if evento.entidades:
-
         objetivo.tipo = "aprender"
-
-        objetivo.parametros = {
-
-            "dados": evento.entidades
-
-        }
-
+        objetivo.parametros = {"dados": evento.entidades}
         return evento
 
-    # -----------------------
-    # CONVERSA
-    # -----------------------
+    # === EXPANSÃO FUTURA (já preparado) ===
+    # if "como vai" in texto or "tudo bem" in texto:
+    #     objetivo.tipo = "bem_estar"
 
+    # Padrão: conversa normal
     objetivo.tipo = "conversar"
-
     return evento
-    if evento.entidades:
-
-        return {
-            "acao": "confirmar_aprendizado",
-            "tipo": evento.entidades[0]["tipo"],
-            "valor": evento.entidades[0]["valor"]
-        }
-
-    return {
-        "acao": "responder",
-        "tipo": "desconhecido"
-    }
