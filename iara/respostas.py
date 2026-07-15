@@ -1,8 +1,7 @@
 """
 Sistema de respostas da Iara.
 
-Responsável por carregar as respostas
-e escolher uma resposta adequada.
+Responsável por gerar respostas para o usuário.
 """
 
 import json
@@ -33,9 +32,26 @@ RESPOSTAS = carregar()
 
 def responder(decisao: dict) -> str:
 
+    acao = decisao["acao"]
+
+    if acao == "consultar_memoria":
+
+        tipo = decisao["tipo"]
+
+        valor = decisao["valor"]
+
+        if tipo == "nome":
+
+            if valor:
+
+                return f"Seu nome é {valor}."
+
+            return "Ainda não sei qual é o seu nome."
+
     tipo = decisao["tipo"]
 
     if tipo not in RESPOSTAS:
+
         tipo = "desconhecido"
 
     return random.choice(
