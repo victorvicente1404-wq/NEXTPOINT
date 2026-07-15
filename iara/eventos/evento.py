@@ -1,17 +1,26 @@
+from dataclasses import dataclass, field
+from typing import Any
+import time
+import uuid
+
+
+@dataclass
 class EventoSistema:
 
-    def __init__(self):
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
 
-        self.id = ""
+    tipo: str = ""
 
-        self.tipo = ""
+    origem: str = ""
 
-        self.origem = ""
+    destino: str = ""
 
-        self.destino = ""
+    dados: dict = field(default_factory=dict)
 
-        self.dados = {}
+    prioridade: int = 0
 
-        self.prioridade = 0
+    timestamp: float = field(default_factory=time.time)
 
-        self.cancelado = False
+    cancelado: bool = False
+
+    resposta: Any = None
