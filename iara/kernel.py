@@ -1,3 +1,4 @@
+from .brain.cerebro import Cerebro
 from .eventos import EventBus
 
 from .plugins import GerenciadorPlugins
