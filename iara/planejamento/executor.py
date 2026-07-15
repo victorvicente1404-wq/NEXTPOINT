@@ -1,11 +1,16 @@
 """
 Executor da Iara.
 
-Executa os passos definidos pelo planejador.
+Executa o plano criado pelo planejador.
 """
 
+from ..pipeline.memoria import (
+    aprender,
+    consultar
+)
 
-def executar_plano(evento):
+
+def executar(evento):
 
     objetivo = evento.objetivo
 
@@ -13,22 +18,46 @@ def executar_plano(evento):
 
         acao = passo["acao"]
 
-        if acao == "consultar_memoria":
+        # --------------------
 
-            objetivo.resultado = evento.memoria
+        if acao == "ler_memoria":
+
+            chave = passo["chave"]
+
+            objetivo.resultado = consultar(chave)
+
+        # --------------------
 
         elif acao == "salvar_memoria":
 
+            aprender(
+
+                objetivo.parametros["dados"]
+
+            )
+
+        # --------------------
+
+        elif acao == "confirmar_aprendizado":
+
+            objetivo.resultado = "aprendido"
+
+        # --------------------
+
+        elif acao == "responder_nome":
+
             pass
 
-        elif acao == "confirmar":
+        # --------------------
+
+        elif acao == "responder_idade":
 
             pass
 
-        elif acao == "responder":
+        # --------------------
+
+        elif acao == "responder_padrao":
 
             pass
-
-    objetivo.concluido = True
 
     return evento
