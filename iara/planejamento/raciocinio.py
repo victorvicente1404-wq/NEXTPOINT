@@ -1,44 +1,35 @@
 """
-Raciocínio da Iara - Versão Melhorada
+Raciocínio Avançado da Iara (Modo JARVIS)
 """
 
+from ..pipeline.memoria import consultar
+
 def decidir(evento):
-    """Decide o objetivo principal com base na mensagem do usuário."""
-    
     texto = evento.texto.lower().strip()
     objetivo = evento.objetivo
 
-    # === INTENÇÕES PRIORITÁRIAS ===
+    # Memória rápida
+    nome = consultar("perfil_usuario.nome")
 
-    # Cumprimentos e conversa casual
-    if any(p in texto for p in ["oi", "olá", "eae", "fala", "bom dia", "boa tarde", "boa noite"]):
+    # Cumprimentos personalizados
+    if any(saud in texto for saud in ["oi", "olá", "eae", "fala", "bom dia", "boa tarde"]):
         objetivo.tipo = "cumprimento"
+        objetivo.parametros = {"nome": nome}
         return evento
 
-    # Despedidas
-    if any(p in texto for p in ["tchau", "até logo", "falou", "adeus"]):
-        objetivo.tipo = "despedida"
+    # Perguntas sobre si mesmo
+    if "meu nome" in texto or "quem sou" in texto:
+        objetivo.tipo = "consultar_perfil"
         return evento
 
-    # Consultar informações pessoais
-    if "meu nome" in texto or "quem sou eu" in texto:
-        objetivo.tipo = "consultar_nome"
-        return evento
-
-    if "idade" in texto and ("tenho" in texto or "minha" in texto or "quantos anos" in texto):
-        objetivo.tipo = "consultar_idade"
-        return evento
-
-    # Aprendizado (quando o usuário se apresenta ou conta algo)
-    if evento.entidades:
+    # Aprendizado de qualquer informação
+    if evento.entidades or any(palavra in texto for palavra in ["meu", "eu", "gosto", "costumo", "sempre"]):
         objetivo.tipo = "aprender"
-        objetivo.parametros = {"dados": evento.entidades}
+        objetivo.parametros = {"dados": evento.entidades or texto}
         return evento
 
-    # === EXPANSÃO FUTURA (já preparado) ===
-    # if "como vai" in texto or "tudo bem" in texto:
-    #     objetivo.tipo = "bem_estar"
-
-    # Padrão: conversa normal
+    # Modo JARVIS: Observação implícita
     objetivo.tipo = "conversar"
+    objetivo.parametros = {"contexto_personalizado": True}
+    
     return evento
