@@ -1,13 +1,15 @@
 """
 Interpretador da Iara.
 
-Responsável por descobrir a intenção
-da mensagem do usuário.
+Responsável por identificar a intenção
+da mensagem utilizando padrões.
 """
+
+import re
 
 from .nlp import limpar_texto
 from .extrator import extrair
-from .intencoes import INTENCOES
+from .padroes import PADROES
 
 
 def interpretar(mensagem: str):
@@ -18,11 +20,21 @@ def interpretar(mensagem: str):
 
     intencao = "desconhecido"
 
-    for nome_intencao, frases in INTENCOES.items():
+    confianca = 0.0
 
-        if texto in frases:
+    for nome, lista in PADROES.items():
 
-            intencao = nome_intencao
+        for padrao in lista:
+
+            if re.fullmatch(padrao, texto):
+
+                intencao = nome
+
+                confianca = 1.0
+
+                break
+
+        if intencao != "desconhecido":
 
             break
 
@@ -34,7 +46,7 @@ def interpretar(mensagem: str):
 
         "intencao": intencao,
 
-        "confianca": 1.0,
+        "confianca": confianca,
 
         "entidades": entidades
 
