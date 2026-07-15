@@ -15,59 +15,43 @@ def interpretar(mensagem: str):
     entidades = extrair(texto)
 
     cumprimentos = {
-
         "oi",
-
         "ola",
-
         "eae",
-
         "opa",
-
         "fala",
-
         "bom dia",
-
         "boa tarde",
-
         "boa noite"
-
     }
 
     despedidas = {
-
         "tchau",
-
         "falou",
-
         "ate mais",
-
         "ate logo"
-
     }
 
     if texto in cumprimentos:
-
         intencao = "cumprimento"
 
     elif texto in despedidas:
-
         intencao = "despedida"
 
-    else:
+    elif texto in (
+        "qual e meu nome",
+        "qual meu nome",
+        "como eu me chamo"
+    ):
+        intencao = "consultar_nome"
 
+    else:
         intencao = "desconhecido"
 
     return {
-
         "mensagem": mensagem,
-
         "texto": texto,
-
         "intencao": intencao,
-
         "confianca": 1.0,
-
         "entidades": entidades
-
     }
