@@ -1,40 +1,57 @@
 """
-Sistema de raciocínio da Iara.
+Raciocínio da Iara.
 """
 
-from .evento import Evento
 
+def decidir(evento):
 
-def decidir(
-    evento: Evento,
-    contexto: dict,
-    memoria: dict
-) -> dict:
+    texto = evento.texto.lower()
 
-    if evento.intencao == "cumprimento":
+    objetivo = evento.objetivo
 
-        return {
-            "acao": "responder",
-            "tipo": "cumprimento"
+    # -----------------------
+    # CONSULTAR NOME
+    # -----------------------
+
+    if "meu nome" in texto and "qual" in texto:
+
+        objetivo.tipo = "consultar_nome"
+
+        return evento
+
+    # -----------------------
+    # CONSULTAR IDADE
+    # -----------------------
+
+    if "minha idade" in texto:
+
+        objetivo.tipo = "consultar_idade"
+
+        return evento
+
+    # -----------------------
+    # APRENDER
+    # -----------------------
+
+    if evento.entidades:
+
+        objetivo.tipo = "aprender"
+
+        objetivo.parametros = {
+
+            "dados": evento.entidades
+
         }
 
-    if evento.intencao == "despedida":
+        return evento
 
-        return {
-            "acao": "responder",
-            "tipo": "despedida"
-        }
+    # -----------------------
+    # CONVERSA
+    # -----------------------
 
-    if evento.intencao == "consultar_nome":
+    objetivo.tipo = "conversar"
 
-        nome = memoria["usuario"].get("nome")
-
-        return {
-            "acao": "consultar_memoria",
-            "tipo": "nome",
-            "valor": nome
-        }
-
+    return evento
     if evento.entidades:
 
         return {
