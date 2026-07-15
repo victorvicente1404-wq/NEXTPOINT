@@ -1,5 +1,7 @@
 from .eventos import EventBus
 
+from .plugins import GerenciadorPlugins
+
 from .servicos import (
     Logger,
     Configuracao,
@@ -23,32 +25,30 @@ class Kernel:
 
         self.ferramentas = {}
 
-        self.plugins = {}
+        self.plugins = GerenciadorPlugins(
+            self
+        )
 
     def iniciar(self):
 
-        self.logger.info("Kernel iniciado.")
+        self.logger.info(
+            "Inicializando Kernel..."
+        )
+
+        self.plugins.carregar_plugins()
+
+        self.logger.info(
+            "Kernel iniciado."
+        )
 
     def registrar_agente(self, agente):
 
-        self.agentes[agente.nome] = agente
-
-        self.logger.info(
-            f"Agente registrado: {agente.nome}"
-        )
+        self.agentes[
+            agente.nome
+        ] = agente
 
     def registrar_ferramenta(self, ferramenta):
 
-        self.ferramentas[ferramenta.nome] = ferramenta
-
-        self.logger.info(
-            f"Ferramenta registrada: {ferramenta.nome}"
-        )
-
-    def registrar_plugin(self, plugin):
-
-        self.plugins[plugin.nome] = plugin
-
-        self.logger.info(
-            f"Plugin registrado: {plugin.nome}"
-        )
+        self.ferramentas[
+            ferramenta.nome
+        ] = ferramenta
