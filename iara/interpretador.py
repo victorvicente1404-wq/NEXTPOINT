@@ -1,53 +1,38 @@
 """
 Interpretador da Iara.
-
-Responsável por identificar a intenção
-da mensagem utilizando padrões.
 """
 
 import re
 
-from .nlp import limpar_texto
+from .evento import Evento
 from .extrator import extrair
+from .nlp import limpar_texto
 from .padroes import PADROES
 
 
-def interpretar(mensagem: str):
+def interpretar(evento: Evento):
 
-    texto = limpar_texto(mensagem)
+    evento.texto = limpar_texto(evento.mensagem)
 
-    entidades = extrair(texto)
+    evento.entidades = extrair(
+        evento.texto
+    )
 
-    intencao = "desconhecido"
-
-    confianca = 0.0
+    evento.intencao = "desconhecido"
+    evento.confianca = 0.0
 
     for nome, lista in PADROES.items():
 
         for padrao in lista:
 
-            if re.fullmatch(padrao, texto):
+            if re.fullmatch(
+                padrao,
+                evento.texto
+            ):
 
-                intencao = nome
+                evento.intencao = nome
+                evento.confianca = 1.0
 
-                confianca = 1.0
+                return evento
 
-                break
-
-        if intencao != "desconhecido":
-
-            break
-
-    return {
-
-        "mensagem": mensagem,
-
-        "texto": texto,
-
-        "intencao": intencao,
-
-        "confianca": confianca,
-
-        "entidades": entidades
-
-    }
+    return evento
