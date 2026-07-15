@@ -1,38 +1,22 @@
 """
 Interpretador da Iara.
+
+Analisa a mensagem e preenche o Evento.
 """
 
-import re
-
-from .evento import Evento
-from .extrator import extrair
-from .nlp import limpar_texto
-from .padroes import PADROES
+from ..intencoes import identificar_intencao
+from .extrator import extrair_entidades
 
 
-def interpretar(evento: Evento):
+def interpretar(evento):
 
-    evento.texto = limpar_texto(evento.mensagem)
+    texto = evento.mensagem.strip()
 
-    evento.entidades = extrair(
-        evento.texto
-    )
+    evento.texto = texto
 
-    evento.intencao = "desconhecido"
-    evento.confianca = 0.0
+    evento.intencao = identificar_intencao(texto)
 
-    for nome, lista in PADROES.items():
+    evento.entidades = extrair_entidades(texto)
 
-        for padrao in lista:
-
-            if re.fullmatch(
-                padrao,
-                evento.texto
-            ):
-
-                evento.intencao = nome
-                evento.confianca = 1.0
-
-                return evento
-
+    return evento
     return evento
