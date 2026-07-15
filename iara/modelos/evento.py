@@ -1,5 +1,6 @@
 """
 Evento da Iara.
+Representa uma interação completa entre o usuário e a IA.
 """
 
 from .objetivo import Objetivo
@@ -9,22 +10,21 @@ class Evento:
 
     def __init__(self, mensagem):
 
+        # Entrada
         self.mensagem = mensagem
 
-        self.texto = ""
-
+        # Pipeline
+        self.texto = mensagem
         self.intencao = "desconhecido"
-
-        self.confianca = 0.0
-
         self.entidades = []
 
+        # Estado
         self.contexto = {}
-
         self.memoria = {}
 
-        self.decisao = {}
-
+        # Planejamento
         self.objetivo = Objetivo()
 
+        # Resultado
+        self.decisao = {}
         self.resposta = ""
