@@ -1,37 +1,22 @@
-"""
-Kernel da Iara.
+from .eventos import EventBus
 
-Coordena o funcionamento da IA.
-"""
-
-from .modelos.evento import Evento
-
-from .motor_conversa import conversar
+from .servicos.memoria import ServicoMemoria
 
 
 class Kernel:
 
-    def processar(self, mensagem):
+    def __init__(self):
 
-        evento = Evento(mensagem)
+        self.bus = EventBus()
 
-        resposta = conversar(evento)
+        self.memoria = ServicoMemoria()
 
-        return resposta
-        decidir(evento)
+        self.agentes = []
 
-        planejar(evento.objetivo)
+        self.ferramentas = []
 
-        executar_plano(evento)
+        self.plugins = []
 
-        evento.resposta = responder(evento.decisao)
+    def iniciar(self):
 
-        atualizar(
-            evento.mensagem,
-            evento.intencao,
-            evento.resposta
-        )
-
-        self.contexto = obter()
-
-        return evento.resposta
+        print("Kernel iniciado.")
