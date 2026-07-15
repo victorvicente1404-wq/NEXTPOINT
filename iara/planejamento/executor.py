@@ -4,12 +4,22 @@ Executor da Iara.
 
 from ..acoes.base import executar
 
-# Importa as ações para registrá-las
 from ..acoes import memoria
 from ..acoes import resposta
 
+from ..agentes.base import encontrar
+
+from ..agentes import memoria as agente_memoria
+from ..agentes import sistema as agente_sistema
+
 
 def executar_plano(evento):
+
+    agente = encontrar(evento)
+
+    if agente:
+
+        agente.executar(evento)
 
     for passo in evento.objetivo.plano:
 
