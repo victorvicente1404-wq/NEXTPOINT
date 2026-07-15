@@ -1,8 +1,5 @@
 """
 Sistema de memória da Iara.
-
-Responsável por carregar, salvar e atualizar
-a memória permanente.
 """
 
 import json
@@ -10,7 +7,7 @@ from pathlib import Path
 
 
 CAMINHO = (
-    Path(__file__).parent.parent
+    Path(__file__).parent.parent.parent
     / "data"
     / "memoria.json"
 )
@@ -35,6 +32,43 @@ def salvar(memoria):
         encoding="utf-8"
     ) as arquivo:
 
+        json.dump(
+            memoria,
+            arquivo,
+            indent=4,
+            ensure_ascii=False
+        )
+
+
+def aprender(entidades):
+
+    memoria = carregar()
+
+    for entidade in entidades:
+
+        memoria[
+            entidade["tipo"]
+        ] = entidade["valor"]
+
+    salvar(memoria)
+
+
+def consultar(chave):
+
+    memoria = carregar()
+
+    return memoria.get(chave)
+
+
+def esquecer(chave):
+
+    memoria = carregar()
+
+    if chave in memoria:
+
+        del memoria[chave]
+
+        salvar(memoria)
         json.dump(
             memoria,
             arquivo,
