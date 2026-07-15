@@ -1,102 +1,40 @@
 """
-Planejador da Iara.
-
-Transforma um objetivo em um plano de execução.
+Planejador da Iara - Versão Melhorada
+Transforma o objetivo em um plano de ações concreto.
 """
 
-
 def planejar(evento):
-
+    """Cria um plano de execução baseado no tipo de objetivo."""
+    
     objetivo = evento.objetivo
-
-    objetivo.plano = []
-
-    # -------------------------
-    # Consultar nome
-    # -------------------------
+    objetivo.plano = []  # Limpa plano anterior
 
     if objetivo.tipo == "consultar_nome":
-
         objetivo.plano.extend([
-
-            {
-                "acao": "ler_memoria",
-                "chave": "nome"
-            },
-
-            {
-                "acao": "responder_nome"
-            }
-
+            {"acao": "ler_memoria", "chave": "usuario.nome"},
+            {"acao": "responder_nome"}
         ])
 
-        return evento
-
-    # -------------------------
-    # Consultar idade
-    # -------------------------
-
-    if objetivo.tipo == "consultar_idade":
-
+    elif objetivo.tipo == "consultar_idade":
         objetivo.plano.extend([
-
-            {
-                "acao": "ler_memoria",
-                "chave": "idade"
-            },
-
-            {
-                "acao": "responder_idade"
-            }
-
+            {"acao": "ler_memoria", "chave": "usuario.idade"},
+            {"acao": "responder_idade"}
         ])
 
-        return evento
-
-    # -------------------------
-    # Aprender
-
-    if objetivo.tipo == "aprender":
-
+    elif objetivo.tipo == "aprender":
         objetivo.plano.extend([
-
-            {
-                "acao": "salvar_memoria"
-            },
-
-            {
-                "acao": "confirmar_aprendizado"
-            }
-
+            {"acao": "salvar_memoria"},
+            {"acao": "confirmar_aprendizado"}
         ])
 
-        return evento
+    elif objetivo.tipo == "cumprimento":
+        objetivo.plano.append({"acao": "responder_cumprimento"})
 
-    # -------------------------
-    # Conversa
+    elif objetivo.tipo == "despedida":
+        objetivo.plano.append({"acao": "responder_despedida"})
 
-    objetivo.plano.append(
+    else:
+        # Conversa normal
+        objetivo.plano.append({"acao": "responder_padrao"})
 
-        {
-            "acao": "responder_padrao"
-        }
-
-    )
-
-    return evento                "acao": "salvar_memoria"
-            }
-
-        )
-
-        objetivo.plano.append(
-
-            {
-                "acao": "confirmar"
-            }
-
-        )
-
-        return objetivo
-
-    return objetivo
-
+    return evento
