@@ -1,40 +1,81 @@
 """
-Motor principal da conversa.
+Motor principal da Iara.
+
+Controla todo o fluxo da conversa.
 """
 
-from .evento import Evento
-from .interpretador import interpretar
-from .contexto import atualizar, obter
-from .memoria import carregar, aprender
-from .raciocinio import decidir
-from .acoes import executar
-from .respostas import responder
+from .pipeline.interpretador import interpretar
+from .pipeline.memoria import (
+    carregar,
+    aprender
+)
+from .pipeline.contexto import (
+    obter,
+    atualizar
+)
+from .planejamento.raciocinio import decidir
+from .planejamento.planejador import planejar
+from .planejamento.executor import executar
+from .pipeline.respostas import responder
 
 
-def conversar(mensagem: str):
+def conversar(evento):
 
-    # Cria o evento
-    evento = Evento(mensagem)
+    # -------------------------
+    # Memória e contexto
+    # -------------------------
 
-    # Interpreta a mensagem
-    interpretar(evento)
-
-    # Aprende automaticamente
-    if evento.entidades:
-        aprender(evento.entidades)
-
-    # Carrega contexto e memória
-    evento.contexto = obter()
     evento.memoria = carregar()
 
-    # Decide o que fazer
-    evento.decisao = decidir(
-        evento,
-        evento.contexto,
-        evento.memoria
+    evento.contexto = obter()
+
+    # -------------------------
+    # Pipeline
+    # -------------------------
+
+    interpretar(evento)
+
+    # -------------------------
+    # Aprendizado
+    # -------------------------
+
+    if evento.entidades:
+
+        aprender(evento.entidades)
+
+        evento.memoria = carregar()
+
+    # -------------------------
+    # Planejamento
+    # -------------------------
+
+    decidir(evento)
+
+    planejar(evento)
+
+    executar(evento)
+
+    # -------------------------
+    # Resposta
+    # -------------------------
+
+    evento.resposta = responder(evento)
+
+    # -------------------------
+    # Contexto
+    # -------------------------
+
+    atualizar(
+
+        evento.mensagem,
+
+        evento.intencao,
+
+        evento.resposta
+
     )
 
-    # Executa ações
+    return evento.resposta    # Executa ações
     executar(evento.decisao)
 
     # Gera resposta
