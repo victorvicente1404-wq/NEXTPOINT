@@ -1,8 +1,5 @@
 """
 Sistema de raciocínio da Iara.
-
-Responsável por decidir a próxima ação
-com base na interpretação, contexto e memória.
 """
 
 
@@ -26,6 +23,16 @@ def decidir(
         return {
             "acao": "responder",
             "tipo": "despedida"
+        }
+
+    if intencao == "consultar_nome":
+
+        nome = memoria["usuario"].get("nome")
+
+        return {
+            "acao": "consultar_memoria",
+            "tipo": "nome",
+            "valor": nome
         }
 
     return {
