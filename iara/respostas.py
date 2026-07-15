@@ -1,7 +1,5 @@
 """
 Sistema de respostas da Iara.
-
-Responsável por gerar respostas para o usuário.
 """
 
 import json
@@ -30,14 +28,17 @@ def carregar():
 RESPOSTAS = carregar()
 
 
-def responder(decisao: dict) -> str:
+def responder(decisao):
 
     acao = decisao["acao"]
+
+    # -----------------------------
+    # CONSULTAS À MEMÓRIA
+    # -----------------------------
 
     if acao == "consultar_memoria":
 
         tipo = decisao["tipo"]
-
         valor = decisao["valor"]
 
         if tipo == "nome":
@@ -47,6 +48,42 @@ def responder(decisao: dict) -> str:
                 return f"Seu nome é {valor}."
 
             return "Ainda não sei qual é o seu nome."
+
+        if tipo == "idade":
+
+            if valor:
+
+                return f"Você tem {valor} anos."
+
+            return "Ainda não sei sua idade."
+
+    # -----------------------------
+    # CONFIRMAÇÃO DE APRENDIZADO
+    # -----------------------------
+
+    if acao == "confirmar_aprendizado":
+
+        tipo = decisao["tipo"]
+        valor = decisao["valor"]
+
+        if tipo == "nome":
+
+            return (
+                f"Prazer em conhecê-lo, {valor}! "
+                "Vou lembrar do seu nome."
+            )
+
+        if tipo == "idade":
+
+            return (
+                f"Entendi! Vou lembrar que você tem {valor} anos."
+            )
+
+        return "Entendi! Vou guardar essa informação."
+
+    # -----------------------------
+    # RESPOSTAS PADRÃO
+    # -----------------------------
 
     tipo = decisao["tipo"]
 
