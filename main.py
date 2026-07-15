@@ -1,30 +1,23 @@
-from iara.config import (
-    NOME_PROJETO,
-    NOME_IA,
-    VERSAO
-)
+from iara.kernel import Kernel
+from iara.config import *
 
-from iara.motor_conversa import conversar
+kernel = Kernel()
 
+print("=" * 40)
+print(f"{NOME_PROJETO} - {NOME_IA}")
+print(f"Versão {VERSAO}")
+print("=" * 40)
 
-def main():
+while True:
 
-    print("=" * 40)
-    print(f"{NOME_PROJETO} - {NOME_IA}")
-    print(f"Versão {VERSAO}")
-    print("=" * 40)
+    mensagem = input("\nVocê: ")
 
-    while True:
+    if mensagem.lower() in ("sair", "exit", "quit"):
 
-        usuario = input("\nVocê: ")
+        print("Iara: Até mais!")
 
-        if usuario.lower() == "sair":
-            break
+        break
 
-        resposta = conversar(usuario)
+    resposta = kernel.processar(mensagem)
 
-        print(f"{NOME_IA}: {resposta}")
-
-
-if __name__ == "__main__":
-    main()
+    print(f"Iara: {resposta}")
