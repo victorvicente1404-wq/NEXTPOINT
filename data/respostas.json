@@ -14,4 +14,20 @@
         "Ainda estou aprendendo. Pode explicar melhor?",
         "Não sei responder isso ainda."
     ]
+
+    "agradecimento": [
+    "De nada!",
+    "Sempre que precisar."
+],
+
+"confirmacao": [
+    "Entendido.",
+    "Certo!",
+    "Ok."
+],
+
+"erro": [
+    "Algo deu errado.",
+    "Não consegui concluir essa tarefa."
+]
 }
