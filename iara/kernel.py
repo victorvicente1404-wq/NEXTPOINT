@@ -25,10 +25,12 @@ class Kernel:
         self.agentes = {}
 
         self.ferramentas = {}
-
+        
         self.plugins = GerenciadorPlugins(
             self
         )
+        
+        self.cerebro = Cerebro()
 
     def iniciar(self):
 
