@@ -1,1 +1,1 @@
-
+from .gerenciador import GerenciadorPlugins
