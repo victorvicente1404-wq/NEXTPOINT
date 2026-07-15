@@ -2,7 +2,12 @@
 Agente do sistema operacional.
 """
 
-from .base import Agente, registrar
+from .base import (
+    Agente,
+    registrar
+)
+
+from ..ferramentas.base import encontrar
 
 
 @registrar
@@ -12,7 +17,6 @@ class AgenteSistema(Agente):
 
     prioridade = 50
 
-    descricao = "Interage com o sistema operacional."
 
     def aceita(self, evento):
 
@@ -20,12 +24,25 @@ class AgenteSistema(Agente):
 
             "abrir_programa",
 
-            "executar_comando",
-
-            "abrir_arquivo"
-
         )
 
+
     def executar(self, evento):
+
+        ferramenta = encontrar(
+            "abrir_programa"
+        )
+
+
+        if ferramenta:
+
+            resultado = ferramenta.executar(
+
+                evento.objetivo.parametros
+
+            )
+
+            evento.objetivo.resultado = resultado
+
 
         return evento
