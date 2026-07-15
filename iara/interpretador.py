@@ -1,11 +1,13 @@
 """
 Interpretador da Iara.
 
-Responsável por entender a mensagem.
+Responsável por descobrir a intenção
+da mensagem do usuário.
 """
 
 from .nlp import limpar_texto
 from .extrator import extrair
+from .intencoes import INTENCOES
 
 
 def interpretar(mensagem: str):
@@ -14,44 +16,26 @@ def interpretar(mensagem: str):
 
     entidades = extrair(texto)
 
-    cumprimentos = {
-        "oi",
-        "ola",
-        "eae",
-        "opa",
-        "fala",
-        "bom dia",
-        "boa tarde",
-        "boa noite"
-    }
+    intencao = "desconhecido"
 
-    despedidas = {
-        "tchau",
-        "falou",
-        "ate mais",
-        "ate logo"
-    }
+    for nome_intencao, frases in INTENCOES.items():
 
-    if texto in cumprimentos:
-        intencao = "cumprimento"
+        if texto in frases:
 
-    elif texto in despedidas:
-        intencao = "despedida"
+            intencao = nome_intencao
 
-    elif texto in (
-        "qual e meu nome",
-        "qual meu nome",
-        "como eu me chamo"
-    ):
-        intencao = "consultar_nome"
-
-    else:
-        intencao = "desconhecido"
+            break
 
     return {
+
         "mensagem": mensagem,
+
         "texto": texto,
+
         "intencao": intencao,
+
         "confianca": 1.0,
+
         "entidades": entidades
+
     }
