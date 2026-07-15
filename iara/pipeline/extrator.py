@@ -1,40 +1,55 @@
 """
-Extrator de informações da Iara.
-
-Responsável por identificar dados importantes
-na mensagem do usuário.
+Extrator de entidades.
 """
 
 import re
 
 
-def extrair(texto: str) -> list:
+def extrair_entidades(texto):
 
-    dados = []
+    entidades = []
+
+    texto_lower = texto.lower()
 
     # Nome
-    padrao_nome = re.search(
-        r"meu nome e ([a-zA-ZÀ-ÿ]+)",
-        texto
+    nome = re.search(
+
+        r"meu nome é\s+([a-zA-ZÀ-ÿ]+)",
+
+        texto_lower
+
     )
 
-    if padrao_nome:
+    if nome:
 
-        dados.append(
-            {
-                "tipo": "nome",
-                "valor": padrao_nome.group(1).capitalize()
-            }
-        )
+        entidades.append({
+
+            "tipo": "nome",
+
+            "valor": nome.group(1).title()
+
+        })
 
     # Idade
+    idade = re.search(
 
-    padrao_idade = re.search(
-        r"tenho (\d+) anos",
-        texto
+        r"(\d+)\s*anos",
+
+        texto_lower
+
     )
 
-    if padrao_idade:
+    if idade:
+
+        entidades.append({
+
+            "tipo": "idade",
+
+            "valor": idade.group(1)
+
+        })
+
+    return entidades    if padrao_idade:
 
         dados.append(
             {
