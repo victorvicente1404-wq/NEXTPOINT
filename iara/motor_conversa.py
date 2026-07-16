@@ -1,5 +1,5 @@
 """
-Motor principal da Iara - Modo Parceira / JARVIS
+Motor principal da Iara - Versão Inteligente
 """
 
 from .pipeline.interpretador import interpretar
@@ -8,15 +8,12 @@ from .pipeline.contexto import obter, atualizar
 from .planejamento.raciocinio import decidir
 from .planejamento.planejador import planejar
 from .planejamento.executor import executar_plano
-from .pipeline.respostas import responder
-from .cognitivo.proatividade import Proatividade   # ← Novo
-
-
-proatividade = Proatividade()   # Instância global
+from .cognitivo.gerador_respostas import gerador   # ← Novo
+from .pipeline.respostas import responder   # Ainda mantemos como fallback
 
 
 def conversar(evento):
-    """Fluxo principal com proatividade."""
+    """Fluxo principal com respostas inteligentes."""
     
     evento.memoria = carregar()
     evento.contexto = obter()
@@ -28,26 +25,15 @@ def conversar(evento):
         aprender(evento.entidades)
         evento.memoria = carregar()
 
-    # Decisão + Planejamento
+    # Raciocínio
     decidir(evento)
     planejar(evento)
     executar_plano(evento)
 
-    # Resposta normal
-    evento.resposta = responder(evento)
+    # === GERAÇÃO INTELIGENTE DE RESPOSTA ===
+    evento.resposta = gerador.gerar(evento)
 
+    # Atualiza contexto
     atualizar(evento.mensagem, evento.intencao, evento.resposta)
 
     return evento.resposta
-
-
-# Função para modo proativo (chamada periodicamente ou por evento)
-def iniciativa_proativa():
-    """Iara pode falar por iniciativa própria."""
-    tipo = proatividade.deve_iniciar(None)
-    if tipo:
-        mensagem = proatividade.gerar_iniciativa(tipo)
-        proatividade.registrar_iniciativa()
-        print(f"Iara (proativa): {mensagem}")
-        return mensagem
-    return None
