@@ -1,29 +1,33 @@
 """
-Ferramenta de Pesquisa da Iara
-Permite pesquisar na web e usar conhecimento externo.
+Pesquisa Avançada da Iara
 """
 
 import requests
-# No futuro podemos integrar APIs como DuckDuckGo, Google, etc.
+from bs4 import BeautifulSoup  # pip install beautifulsoup4 lxml (se precisar)
 
 class Pesquisador:
     
     def pesquisar(self, query):
-        """Pesquisa simples (pode ser expandida)."""
-        print(f"Iara está pesquisando: {query}")
+        """Pesquisa real na web usando DuckDuckGo."""
+        print(f"🔍 Iara pesquisando: {query}")
         
-        # Simulação por enquanto (depois conectamos API real)
-        respostas_simuladas = {
-            "clima": "Hoje está ensolarado na sua região.",
-            "noticias": "As principais notícias do dia...",
-            "ajuda": "Claro! Em que posso te ajudar hoje?"
-        }
-        
-        for chave in respostas_simuladas:
-            if chave in query.lower():
-                return respostas_simuladas[chave]
-        
-        return f"Pesquisei sobre '{query}'. Me dá mais detalhes do que você quer saber que eu aprofundo."
-
-
+        try:
+            url = f"https://html.duckduckgo.com/html/?q={query.replace(' ', '+')}"
+            headers = {"User-Agent": "Mozilla/5.0"}
+            
+            response = requests.get(url, headers=headers, timeout=5)
+            
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, 'html.parser')
+                resultados = soup.find_all('a', class_='result__a')
+                
+                if resultados:
+                    snippet = resultados[0].get_text()[:200]
+                    return f"Encontrei isso: {snippet}..."
+                
+            return "Pesquisei, mas não achei algo muito preciso. Pode reformular?"
+            
+        except Exception:
+            return "Não consegui acessar a internet agora. Me pergunta outra coisa ou tenta mais tarde."
+            
 pesquisador = Pesquisador()
