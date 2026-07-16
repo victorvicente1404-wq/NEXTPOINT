@@ -1,96 +1,43 @@
 """
-Sistema de respostas da Iara.
+Sistema de Respostas da Iara - Personalidade Parceira
 """
 
-import json
 import random
-from pathlib import Path
+from ..pipeline.memoria import consultar
 
+def responder(evento):
+    """Gera respostas naturais e contextuais."""
+    
+    tipo = evento.objetivo.tipo
+    memoria = evento.memoria
+    nome = consultar("perfil_usuario.nome") or "amigo"
 
-CAMINHO = (
-    Path(__file__).parent.parent
-    / "data"
-    / "respostas.json"
-)
+    # Respostas personalizadas
+    if tipo == "cumprimento":
+        return random.choice([
+            f"Oi, {nome}! Que bom te ver.",
+            f"E aí, {nome}? Tudo bem por aí?",
+            f"Bom te ver por aqui! 😊"
+        ])
 
+    elif tipo == "consultar_perfil":
+        if nome:
+            return f"Você é o {nome}. Estou aqui pra te ajudar no que precisar."
+        return "Ainda não sei seu nome direito. Me conta mais sobre você?"
 
-def carregar():
+    elif tipo == "aprender":
+        return random.choice([
+            "Entendi! Vou guardar isso.",
+            "Legal, obrigado por me contar. Vou lembrar disso.",
+            "Certo! Aprendido. 😊"
+        ])
 
-    with open(
-        CAMINHO,
-        "r",
-        encoding="utf-8"
-    ) as arquivo:
-
-        return json.load(arquivo)
-
-
-RESPOSTAS = carregar()
-
-
-def responder(decisao):
-
-    acao = decisao["acao"]
-
-    # -----------------------------
-    # CONSULTAS À MEMÓRIA
-    # -----------------------------
-
-    if acao == "consultar_memoria":
-
-        tipo = decisao["tipo"]
-        valor = decisao["valor"]
-
-        if tipo == "nome":
-
-            if valor:
-
-                return f"Seu nome é {valor}."
-
-            return "Ainda não sei qual é o seu nome."
-
-        if tipo == "idade":
-
-            if valor:
-
-                return f"Você tem {valor} anos."
-
-            return "Ainda não sei sua idade."
-
-    # -----------------------------
-    # CONFIRMAÇÃO DE APRENDIZADO
-    # -----------------------------
-
-    if acao == "confirmar_aprendizado":
-
-        tipo = decisao["tipo"]
-        valor = decisao["valor"]
-
-        if tipo == "nome":
-
-            return (
-                f"Prazer em conhecê-lo, {valor}! "
-                "Vou lembrar do seu nome."
-            )
-
-        if tipo == "idade":
-
-            return (
-                f"Entendi! Vou lembrar que você tem {valor} anos."
-            )
-
-        return "Entendi! Vou guardar essa informação."
-
-    # -----------------------------
-    # RESPOSTAS PADRÃO
-    # -----------------------------
-
-    tipo = decisao["tipo"]
-
-    if tipo not in RESPOSTAS:
-
-        tipo = "desconhecido"
-
-    return random.choice(
-        RESPOSTAS[tipo]
-    )
+    # Resposta padrão mais natural
+    respostas_padrao = [
+        "Entendi... Me conta mais?",
+        "Interessante! O que você acha disso?",
+        "Tô aqui ouvindo. Pode falar.",
+        "Hum... e aí, o que mais?"
+    ]
+    
+    return random.choice(respostas_padrao)
