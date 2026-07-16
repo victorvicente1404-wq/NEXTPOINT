@@ -1,5 +1,5 @@
 """
-Motor principal da Iara - Versão Inteligente
+Motor Principal da Iara - Versão Inteligente (JARVIS-like)
 """
 
 from .pipeline.interpretador import interpretar
@@ -8,29 +8,30 @@ from .pipeline.contexto import obter, atualizar
 from .planejamento.raciocinio import decidir
 from .planejamento.planejador import planejar
 from .planejamento.executor import executar_plano
-from .cognitivo.gerador_respostas import gerador   # ← Novo
-from .pipeline.respostas import responder   # Ainda mantemos como fallback
+from .cognitivo.gerador_respostas import gerador
 
 
 def conversar(evento):
-    """Fluxo principal com respostas inteligentes."""
+    """Fluxo completo com inteligência e pesquisa."""
     
+    # Preparação
     evento.memoria = carregar()
     evento.contexto = obter()
 
+    # Processamento da entrada
     interpretar(evento)
 
-    # Aprendizado
+    # Aprendizado contínuo
     if evento.entidades:
         aprender(evento.entidades)
         evento.memoria = carregar()
 
-    # Raciocínio
+    # Raciocínio e planejamento
     decidir(evento)
     planejar(evento)
     executar_plano(evento)
 
-    # === GERAÇÃO INTELIGENTE DE RESPOSTA ===
+    # Geração inteligente de resposta (com pesquisa se necessário)
     evento.resposta = gerador.gerar(evento)
 
     # Atualiza contexto
